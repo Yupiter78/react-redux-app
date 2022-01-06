@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {compose, pipe} from "lodash/fp";
+
+function createStore(initialState) {
+    let state = initialState;
+
+    function getState() {
+        return state;
+    }
+
+    return {getState};
+}
+
+const store = createStore([{id: 1, description: "Task 1", completed: false}]);
 
 const App = () => {
-    const x = 2;
-    let y = 6;
-    const double = (number) => number * 2;
-    const square = (number) => number * number;
-    const half = (number, y) => number / y;
-    console.log(half(12));
-    y = 2;
-    console.log(half(12, 3));
-    const divide = (num2) => {
-      return function (num1) {
-          return num1 / num2;
-      }
-    }
-    const mathCalculate = pipe(double, square, half, divide(3));
-    return <h1>{mathCalculate(x)}</h1>
+    console.log("store:", store.getState());
+    return <h1>App</h1>
 }
 
 ReactDOM.render(
