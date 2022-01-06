@@ -4,9 +4,13 @@ import {compose, pipe} from "lodash/fp";
 
 const App = () => {
     const x = 2;
+    let y = 6;
     const double = (number) => number * 2;
     const square = (number) => number * number;
-    const half = (number) => number / 2;
+    const half = (number, y) => number / y;
+    console.log(half(12));
+    y = 2;
+    console.log(half(12, 3));
     const divide = (num2) => {
       return function (num1) {
           return num1 / num2;
