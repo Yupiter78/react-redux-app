@@ -1,55 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { createStore } from "./store/createStore";
+import { taskReducer } from "./store/taskReducer";
+import * as actions from "./store/actionTypes";
 
-function taskReducer(state, action) {
-  switch (action.type) {
-    case "task/completed":
-      const newArray = [...state];
-      const elementIndex = newArray.findIndex(
-        (el) => el.id === action.payload.id
-      );
-      newArray[elementIndex].completed = true;
-      return newArray;
-    case "task/updated": {
-      const newArray = [...state];
-      const elementIndex = newArray.findIndex(
-        (el) => el.id === action.payload.id
-      );
-      newArray[elementIndex] = { ...newArray[elementIndex], ...action.payload };
-      return newArray;
-    }
-    default:
-      break;
-  }
-}
-
-function createStore(reducer, initialState) {
-  let state = initialState;
-  const listeners = [];
-
-  function getState() {
-    return state;
-  }
-
-  function dispatch(action) {
-    state = reducer(state, action);
-    for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
-      listener();
-    }
-  }
-
-  function subscribe(listener) {
-    listeners.push(listener);
-  }
-
-  return { getState, dispatch, subscribe };
-}
-
-const store = createStore(taskReducer, [
+const initialState = [
   { id: 1, title: "Task 1", completed: false },
   { id: 2, title: "Task 2", completed: false },
-]);
+];
+const store = createStore(taskReducer, initialState);
 
 const App = () => {
   const [state, setState] = useState(store.getState());
@@ -59,12 +18,15 @@ const App = () => {
     });
   }, []);
   const completeTask = (taskId) => {
-    store.dispatch({ type: "task/completed", payload: { id: taskId } });
+    store.dispatch({
+      type: actions.taskUpdated,
+      payload: { id: taskId, completed: true },
+    });
   };
 
   const changeTitles = (taskId) => {
     store.dispatch({
-      type: "task/updated",
+      type: actions.taskUpdated,
       payload: { id: taskId, title: `New title for ${taskId}` },
     });
   };
