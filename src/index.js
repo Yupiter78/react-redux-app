@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import * as actions from "./store/actionTypes";
 import { initiateStore } from "./store/store";
+import * as actions from "./store/actions";
 
 const store = initiateStore();
 
@@ -13,17 +13,11 @@ const App = () => {
     });
   }, []);
   const completeTask = (taskId) => {
-    store.dispatch({
-      type: actions.taskUpdated,
-      payload: { id: taskId, completed: true },
-    });
+    store.dispatch(actions.taskCompleted(taskId));
   };
 
-  const changeTitles = (taskId) => {
-    store.dispatch({
-      type: actions.taskUpdated,
-      payload: { id: taskId, title: `New title for ${taskId}` },
-    });
+  const changeTitle = (taskId) => {
+    store.dispatch(actions.titleChanged(taskId));
   };
   return (
     <>
@@ -34,7 +28,7 @@ const App = () => {
             <p>{el.title}</p>
             <p>{`Completed: ${el.completed}`}</p>
             <button onClick={() => completeTask(el.id)}>Completed</button>
-            <button onClick={() => changeTitles(el.id)}>Change title</button>
+            <button onClick={() => changeTitle(el.id)}>Change title</button>
             <hr />
           </li>
         ))}
