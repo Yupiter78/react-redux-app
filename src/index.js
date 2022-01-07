@@ -10,6 +10,14 @@ function taskReducer(state, action) {
       );
       newArray[elementIndex].completed = true;
       return newArray;
+    case "task/updated": {
+      const newArray = [...state];
+      const elementIndex = newArray.findIndex(
+        (el) => el.id === action.payload.id
+      );
+      newArray[elementIndex] = { ...newArray[elementIndex], ...action.payload };
+      return newArray;
+    }
     default:
       break;
   }
@@ -39,8 +47,8 @@ function createStore(reducer, initialState) {
 }
 
 const store = createStore(taskReducer, [
-  { id: 1, description: "Task 1", completed: false },
-  { id: 2, description: "Task 2", completed: false },
+  { id: 1, title: "Task 1", completed: false },
+  { id: 2, title: "Task 2", completed: false },
 ]);
 
 const App = () => {
@@ -53,15 +61,23 @@ const App = () => {
   const completeTask = (taskId) => {
     store.dispatch({ type: "task/completed", payload: { id: taskId } });
   };
+
+  const changeTitles = (taskId) => {
+    store.dispatch({
+      type: "task/updated",
+      payload: { id: taskId, title: `New title for ${taskId}` },
+    });
+  };
   return (
     <>
       <h1>App</h1>
       <ul>
         {state.map((el) => (
           <li key={el.id}>
-            <p>{el.description}</p>
+            <p>{el.title}</p>
             <p>{`Completed: ${el.completed}`}</p>
             <button onClick={() => completeTask(el.id)}>Completed</button>
+            <button onClick={() => changeTitles(el.id)}>Change title</button>
             <hr />
           </li>
         ))}
