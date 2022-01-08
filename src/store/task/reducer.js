@@ -1,6 +1,6 @@
 import { taskDeleted, taskUpdated } from "./actionTypes";
 
-export function taskReducer(state = [], action) {
+export function reducer(state = [], action) {
   switch (action.type) {
     case taskUpdated: {
       const newArray = [...state];
