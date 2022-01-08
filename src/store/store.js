@@ -1,8 +1,8 @@
 import { createStore } from "redux";
-import reducer from "./task";
+import taskReducer from "./task";
 
 function configureStore() {
-  return createStore(reducer);
+  return createStore(taskReducer);
 }
 
 export default configureStore;
