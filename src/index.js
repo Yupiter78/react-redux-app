@@ -13,7 +13,10 @@ const App = () => {
     });
   }, []);
   const completeTask = (taskId) => {
-    store.dispatch(taskCompleted(taskId));
+    store.dispatch((getState, dispatch) => {
+      console.log(dispatch, getState);
+      store.dispatch(taskCompleted(taskId));
+    });
   };
 
   const changeTitle = (taskId) => {

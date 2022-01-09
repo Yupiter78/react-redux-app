@@ -22,6 +22,9 @@ const taskSlice = createSlice({
 const { actions, reducer: taskReducer } = taskSlice;
 const { update, remove } = actions;
 
+const taskCompleted = (taskId) => (dispatch, getState) => {
+  dispatch(taskCompleted(taskId));
+};
 export function taskCompleted(id) {
   return update({ id, completed: true });
 }
