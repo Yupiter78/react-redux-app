@@ -43,6 +43,8 @@ const App = () => {
   return (
     <>
       <h1>App</h1>
+      <button onClick={() => createTask()}>Add a task</button>
+      <hr />
       <ul>
         {state.map((el) => (
           <li key={el.id}>
@@ -57,7 +59,6 @@ const App = () => {
           </li>
         ))}
       </ul>
-      <button onClick={() => createTask()}>Create task</button>
     </>
   );
 };
