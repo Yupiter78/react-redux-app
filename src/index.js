@@ -8,6 +8,7 @@ import {
   loadTasks,
   getTasks,
   getTasksLoadingStatus,
+  taskCreated,
 } from "./store/task";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { getError } from "./store/errors";
@@ -28,6 +29,9 @@ const App = () => {
   };
   const deleteTask = (taskId) => {
     dispatch(taskDeleted(taskId));
+  };
+  const createTask = () => {
+    dispatch(taskCreated({ title: "new task", completed: false }));
   };
   if (isLoading) {
     return <h3>loading...</h3>;
@@ -53,6 +57,7 @@ const App = () => {
           </li>
         ))}
       </ul>
+      <button onClick={() => createTask()}>Create task</button>
     </>
   );
 };
