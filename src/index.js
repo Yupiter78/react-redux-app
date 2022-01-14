@@ -12,6 +12,7 @@ import {
 } from "./store/task";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { getError } from "./store/errors";
+import { nanoid } from "nanoid";
 
 const store = configureStore();
 
@@ -31,7 +32,9 @@ const App = () => {
     dispatch(taskDeleted(taskId));
   };
   const createTask = () => {
-    dispatch(taskCreated({ title: "new task", completed: false }));
+    dispatch(
+      taskCreated({ userId: nanoid(), title: "new task", completed: false })
+    );
   };
   if (isLoading) {
     return <h3>loading...</h3>;
